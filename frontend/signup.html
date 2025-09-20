@@ -266,66 +266,99 @@
       }
 
       // Login form validation
-      document
-        .getElementById("loginForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const username = document
-            .getElementById("loginUsername")
-            .value.trim();
-          const password = document.getElementById("loginPassword").value;
+document
+  .getElementById("loginForm")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const username = document.getElementById("loginUsername").value.trim();
+    const password = document.getElementById("loginPassword").value;
 
-          if (!username || !password) {
-            alert("Username and password cannot be empty.");
-            return;
-          }
+    if (!username || !password) {
+      alert("Username and password cannot be empty.");
+      return;
+    }
 
-          // Password check: min 8, at least 1 letter, 1 special char
-          const passRegex =
-            /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-          if (!passRegex.test(password)) {
-            alert(
-              "Password must be at least 8 characters long and include at least one letter and one special character."
-            );
-            return;
-          }
+    const passRegex =
+      /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if (!passRegex.test(password)) {
+      alert(
+        "Password must be at least 8 characters long and include at least one letter and one special character."
+      );
+      return;
+    }
 
-          // Test account
-          if (username === "Admin" && password === "Admin") {
-            window.location.href = "dashboard.html";
-          } else {
-            alert("Invalid username or password!");
-          }
-        });
+    // Send login data to backend
+    try {
+      const response = await fetch("/api/v1/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Save login state and username
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("username", result.data.user.username);
+        alert(result.message || "Login successful!");
+        window.location.href = "index.html"; // or "dashboard.html"
+      } else {
+        alert(result.message || "Invalid username or password!");
+      }
+    } catch (err) {
+      alert("Error connecting to server.");
+    }
+  });
 
       // Signup form validation
-      document
-        .getElementById("signupForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const username = document
-            .getElementById("signupUsername")
-            .value.trim();
-          const email = document.getElementById("signupEmail").value.trim();
-          const password = document.getElementById("signupPassword").value;
+document
+  .getElementById("signupForm")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const username = document.getElementById("signupUsername").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value;
 
-          if (!username || !email || !password) {
-            alert("All fields are required.");
-            return;
-          }
+    if (!username || !email || !password) {
+      alert("All fields are required.");
+      return;
+    }
 
-          const passRegex =
-            /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-          if (!passRegex.test(password)) {
-            alert(
-              "Password must be at least 8 characters long and include at least one letter and one special character."
-            );
-            return;
-          }
+    const passRegex =
+      /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if (!passRegex.test(password)) {
+      alert(
+        "Password must be at least 8 characters long and include at least one letter and one special character."
+      );
+      return;
+    }
 
-          alert("Account created successfully! (Demo only, no backend)");
-          showTab("login"); // Switch to login tab
-        });
+    // Send signup data to backend
+    try {
+      const response = await fetch("/api/v1/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, email, password })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert(result.message || "Signup successful! Please login.");
+        // Optionally switch to login tab
+        showTab("login");
+      } else {
+        alert(result.message || "Signup failed!");
+      }
+    } catch (err) {
+      alert("Error connecting to server.");
+    }
+  });
     </script>
   </body>
 </html>
