@@ -2,21 +2,20 @@
    General Body & Font Styling
 =============================== */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
   margin: 0;
   padding: 0;
-  color: #333;
+  color: #222;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 
   /* Background image */
-  background-image: url("bird-s-eye-view-large-field-with-narrow-road-middle-sunny-day.jpg"); /* <-- Replace this with your image */
+  background-image: url("bird-s-eye-view-large-field-with-narrow-road-middle-sunny-day.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed; /* Parallax scrolling */
+  background-attachment: fixed;
 }
 
 /* Overlay for readability */
@@ -27,7 +26,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* 50% black overlay */
+  background: rgba(0, 0, 0, 0.55); /* Darker for better contrast */
   z-index: -1;
 }
 
@@ -38,31 +37,38 @@ main {
 h1,
 h2,
 h3 {
-  color: #2e7d32;
-  margin: 0.5rem 0;
+  color: #1b5e20;
+  margin: 0.8rem 0;
+  font-weight: 700;
 }
 
 /* ===============================
    Header & Footer
 =============================== */
 header {
-  background-color: rgba(76, 175, 80, 0.9); /* semi-transparent green */
+  background: linear-gradient(90deg, #2e7d32, #43a047);
   color: white;
-  padding: 1rem 2rem;
+  padding: 0.7rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 0;
   z-index: 10;
+  font-size: 1.1rem;
 }
 
 header .logo-link {
   text-decoration: none;
-  color: inherit;
-  font-weight: bold;
-  font-size: 1.5rem;
+  color: white;
+  font-weight: 800;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+header .logo-link:hover {
+  color: #c8e6c9;
 }
 
 nav {
@@ -75,7 +81,7 @@ nav {
 nav ul {
   list-style: none;
   display: flex;
-  gap: 1rem;
+  gap: 1.2rem;
   margin: 0;
   padding: 0;
   align-items: center;
@@ -84,118 +90,127 @@ nav ul {
 nav ul li a {
   color: white;
   text-decoration: none;
-  font-weight: bold;
-  padding: 5px 10px;
+  font-weight: 600;
+  padding: 6px 12px;
+  transition: 0.3s;
 }
 
 nav ul li a:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
 }
 
-/* Center search bar and rightmost button */
 .search-bar {
-  padding: 5px 10px;
+  padding: 8px 12px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   outline: none;
+  font-size: 1rem;
 }
 
 header .btn {
-  margin-left: auto; /* push Sign Up / Logout to right */
+  margin-left: auto;
 }
 
 /* Footer */
 footer {
-  background-color: rgba(51, 51, 51, 0.9);
-  color: white;
+  background: #263238;
+  color: #eceff1;
   text-align: center;
-  padding: 1rem;
-  width: 100%;
+  padding: 0.8rem;
+  font-size: 0.9rem;
 }
 
 /* ===============================
    Buttons
 =============================== */
 .btn {
-  background-color: #4caf50;
+  background: #4caf50;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 6px;
   font-weight: bold;
   border: none;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  font-size: 1.05rem;
 }
 
 .btn:hover {
-  background-color: #45a049;
+  background: #388e3c;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .btn-secondary {
-  background-color: #6c757d;
+  background: #6c757d;
 }
-
 .btn-secondary:hover {
-  background-color: #5a6268;
+  background: #545b62;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 /* ===============================
    Container & Layout
 =============================== */
 .container {
-  max-width: 960px;
+  max-width: 1100px;
   margin: 2rem auto;
   padding: 0 2rem;
   text-align: center;
+  font-size: 1.2rem;
 }
 
 /* ===============================
    Forms & Cards
 =============================== */
 .form-card {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  margin: 1rem auto;
+  background: rgba(255, 255, 255, 0.97);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  max-width: 450px;
+  margin: 2rem auto;
   text-align: left;
+  font-size: 1.1rem;
 }
 
 .form-group {
   margin-bottom: 1.5rem;
 }
-
 .form-group label {
-  display: block;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  display: block;
 }
-
 .form-group input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
 }
 
 /* Dashboard Specifics */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2.5rem;
 }
-
 .dashboard-card {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-left: 5px solid #4caf50;
+  background: rgba(255, 255, 255, 0.97);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  border-left: 6px solid #4caf50;
+  transition: 0.3s;
+}
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* ===============================
@@ -209,7 +224,7 @@ section.active {
 }
 
 /* ===============================
-   Sign Up Choice Box
+   Choice Box
 =============================== */
 .choice-box {
   display: flex;
@@ -218,14 +233,18 @@ section.active {
   flex-wrap: wrap;
   margin-top: 2rem;
 }
-
 .choice {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 250px;
+  background: rgba(255, 255, 255, 0.97);
+  padding: 2.2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  width: 260px;
   text-align: center;
+  transition: 0.3s;
+}
+.choice:hover {
+  transform: scale(1.05);
+  background: #f1f8e9;
 }
 
 /* ===============================
@@ -233,8 +252,8 @@ section.active {
 =============================== */
 .carousel-container {
   position: relative;
-  max-width: 800px;
-  margin: 2rem auto;
+  max-width: 850px;
+  margin: 3rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -248,12 +267,13 @@ section.active {
 
 .carousel-card {
   min-width: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 10px;
-  padding: 2rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 12px;
+  padding: 2.2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: transform 0.5s ease-in-out;
   text-align: left;
+  font-size: 1.1rem;
 }
 
 .carousel-arrow {
@@ -261,43 +281,51 @@ section.active {
   top: 50%;
   transform: translateY(-50%);
   font-size: 2rem;
-  color: #4caf50;
-  background: rgba(255, 255, 255, 0.7);
+  color: #388e3c;
+  background: white;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   text-align: center;
-  line-height: 40px;
+  line-height: 45px;
   cursor: pointer;
   user-select: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: 0.3s;
+}
+
+.carousel-arrow:hover {
+  background: #c8e6c9;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .carousel-arrow.left {
-  left: -20px;
+  left: -25px;
 }
-
 .carousel-arrow.right {
-  right: -20px;
+  right: -25px;
 }
 
 /* ===============================
    Responsive
 =============================== */
 @media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   nav ul {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6rem;
   }
-
   .choice-box {
     flex-direction: column;
     gap: 1rem;
   }
-
   .carousel-arrow {
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
     font-size: 1.5rem;
   }
 }
