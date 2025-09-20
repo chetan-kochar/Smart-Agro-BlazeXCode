@@ -134,28 +134,27 @@
   <footer>
     &copy; 2025 Agri-Insight AI. All rights reserved.
   </footer>
-
-  <script>
-    // Check login status
-    const logoutBtn = document.getElementById("logoutBtn");
-    let loggedIn = localStorage.getItem("loggedIn") === "true";
-    const username = localStorage.getItem("username") || "User";
-
-    // Redirect to login page if not logged in
-    if (!loggedIn) {
-      alert("You must login first!");
-      window.location.href = "index.html";
-    }
-
-    // Display username
-    document.getElementById("usernameDisplay").textContent = username;
-
-    // Logout functionality
-    logoutBtn.addEventListener("click", () => {
-      localStorage.setItem("loggedIn", "false");
-      localStorage.removeItem("username");
-      window.location.href = "index.html";
-    });
-  </script>
+ 
 </body>
+<script>
+const logoutBtn = document.getElementById("logoutBtn");
+let loggedIn = localStorage.getItem("loggedIn") === "true";
+const username = localStorage.getItem("username") || "User";
+
+// Redirect to login page if not logged in
+if (!loggedIn) {
+  alert("You must login first!");
+  window.location.href = "index.html";
+}
+
+// Display username
+document.getElementById("usernameDisplay").textContent = username;
+
+// Logout functionality
+logoutBtn.addEventListener("click", () => {
+  localStorage.setItem("loggedIn", "false");
+  localStorage.removeItem("username");
+  window.location.href = "index.html";
+});
+  </script>
 </html>

@@ -197,13 +197,13 @@
         <li><a href="dashboard.html">Dashboard</a></li>
         <li><a href="settings.html">Settings</a></li>
         <li><a href="aboutus.html">About Us</a></li>
-        <li><a href="login.html" class="btn btn-secondary" id="logoutBtn">Logout</a></li>
         <li><a href="camera.html">Crop Health</a></li>
       </ul>
-      <div class="nav-buttons">
-        <a href="signup.html" class="btn btn-secondary" id="signupBtn">Sign Up / Login</a>
-        <button class="btn btn-primary" id="logoutBtn" style="display:none;">Logout</button>
-      </div>
+<div class="nav-buttons">
+  <span id="usernameDisplay" style="display:none; font-weight:bold; color:white;"></span>
+  <a href="signup.html" class="btn btn-secondary" id="signupBtn">Sign Up / Login</a>
+  <button class="btn btn-primary" id="logoutBtn" style="display:none;">Logout</button>
+</div>
     </nav>
   </header>
 
@@ -242,30 +242,37 @@
     &copy; Team BladeXCode. All rights reserved.
   </footer>
 
-  <script>
-    const signupBtn = document.getElementById("signupBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    let loggedIn = localStorage.getItem("loggedIn") === "true";
-
-    function updateAuthButtons() {
-      if (loggedIn) {
-        signupBtn.style.display = "none";
-        logoutBtn.style.display = "inline-block";
-      } else {
-        signupBtn.style.display = "inline-block";
-        logoutBtn.style.display = "none";
-      }
-    }
-
-    logoutBtn.addEventListener("click", () => {
-      loggedIn = false;
-      localStorage.setItem("loggedIn", "false");
-      updateAuthButtons();
-      alert("You have been logged out.");
-    });
-
-    updateAuthButtons();
-  </script>
+  
 </body>
+<script>
+const signupBtn = document.getElementById("signupBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const usernameDisplay = document.getElementById("usernameDisplay");
+
+let loggedIn = localStorage.getItem("loggedIn") === "true";
+let username = localStorage.getItem("username");
+
+function updateAuthButtons() {
+  if (loggedIn && username) {
+    signupBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+    usernameDisplay.textContent = username;
+    usernameDisplay.style.display = "inline-block";
+  } else {
+    signupBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+    usernameDisplay.style.display = "none";
+  }
+}
+
+logoutBtn.addEventListener("click", () => {
+  loggedIn = false;
+  localStorage.setItem("loggedIn", "false");
+  localStorage.removeItem("username");
+  updateAuthButtons();
+  alert("You have been logged out.");
+});
+
+updateAuthButtons();
+  </script>
 </html>
