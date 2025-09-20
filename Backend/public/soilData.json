@@ -1,0 +1,30 @@
+[
+  {
+    "Metric": "Average Soilmoisture Level (at 15cm)",
+    "Average Soilmoisture Level (at 15cm)": 0.5678704482,
+    "Average SoilMoisture Volume (at 15cm)": 0.49271252,
+    "Aggregate Soilmoisture Percentage (at 15cm)": 4.539600374,
+    "Volume Soilmoisture percentage (at 15cm)": 2.113783846
+  },
+  {
+    "Metric": "Average SoilMoisture Volume (at 15cm)",
+    "Average Soilmoisture Level (at 15cm)": 0.49271252,
+    "Average SoilMoisture Volume (at 15cm)": 14672.07707,
+    "Aggregate Soilmoisture Percentage (at 15cm)": 166.2770893,
+    "Volume Soilmoisture percentage (at 15cm)": 267.0407387
+  },
+  {
+    "Metric": "Aggregate Soilmoisture Percentage (at 15cm)",
+    "Average Soilmoisture Level (at 15cm)": 4.539600374,
+    "Average SoilMoisture Volume (at 15cm)": 166.2770893,
+    "Aggregate Soilmoisture Percentage (at 15cm)": 37.75596904,
+    "Volume Soilmoisture percentage (at 15cm)": 15.41984421
+  },
+  {
+    "Metric": "Volume Soilmoisture percentage (at 15cm)",
+    "Average Soilmoisture Level (at 15cm)": 2.113783846,
+    "Average SoilMoisture Volume (at 15cm)": 267.0407387,
+    "Aggregate Soilmoisture Percentage (at 15cm)": 15.41984421,
+    "Volume Soilmoisture percentage (at 15cm)": 36.14227711
+}
+]

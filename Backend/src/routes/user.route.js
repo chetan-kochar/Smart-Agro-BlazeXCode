@@ -12,7 +12,6 @@ userRouter.route("/login").post(loginUser);
 
 userRouter.route("/logout").post(verifyJwt,logoutUser);
 
-
 userRouter.route("/refresh-AccessToken").post( verifyJwt ,refreshAccessToken);
 
 userRouter.route("/get-current-user").get(verifyJwt,getCurrentUser);

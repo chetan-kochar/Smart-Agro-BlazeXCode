@@ -1,0 +1,26 @@
+[
+  {
+    "Metric": "Average Score",
+    "Mean": 0.386035,
+    "Standard Deviation": 0.753572,
+    "Variance": 0.56787
+  },
+  {
+    "Metric": "Average Score",
+    "Mean": 229.22,
+    "Standard Deviation": 121.1283,
+    "Variance": 14672.08
+  },
+  {
+    "Metric": "Aggregate",
+    "Mean": 3.277208,
+    "Standard Deviation": 6.144589,
+    "Variance": 37.75597
+  },
+  {
+    "Metric": "36.14228",
+    "Mean": 36.14228,
+    "Standard Deviation": 36.14228,
+    "Variance":36.14228
+}
+]
