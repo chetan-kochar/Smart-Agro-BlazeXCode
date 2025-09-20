@@ -212,8 +212,8 @@
     }
   }
 
-  // Login form validation
-  document.getElementById('loginForm').addEventListener('submit', function(e){
+  // Login form validation and API integration
+  document.getElementById('loginForm').addEventListener('submit', async function(e){
     e.preventDefault();
     const username = document.getElementById('loginUsername').value.trim();
     const password = document.getElementById('loginPassword').value;
@@ -223,23 +223,41 @@
       return;
     }
 
-    // Password check: min 8, at least 1 letter, 1 special char
     const passRegex = /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     if(!passRegex.test(password)) {
       alert('Password must be at least 8 characters long and include at least one letter and one special character.');
       return;
     }
 
-    // Test account
-    if(username === 'Admin' && password === 'Admin') {
-      window.location.href = 'dashboard.html';
-    } else {
-      alert('Invalid username or password!');
+    // Send login data to backend API
+    try {
+      const response = await fetch('/api/v1/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      const result = await response.json();
+
+      if(response.ok) {
+        alert(result.message || 'Login successful!');
+        window.location.href = 'dasboard.html';
+      } else {
+        alert(result.message || 'Invalid username or password!');
+      }
+    } catch (err) {
+      alert('Error connecting to server.');
+    }
+    if(response.ok) {
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("username", result.data.user.username); // Save username
+        window.location.href = "index.html"; // or "dasboard.html"
     }
   });
-
-  // Signup form validation
-  document.getElementById('signupForm').addEventListener('submit', function(e){
+// Signup form validation and API integration
+  document.getElementById('signupForm').addEventListener('submit', async function(e){
     e.preventDefault();
     const username = document.getElementById('signupUsername').value.trim();
     const email = document.getElementById('signupEmail').value.trim();
@@ -256,8 +274,34 @@
       return;
     }
 
-    alert('Account created successfully! (Demo only, no backend)');
-    showTab('login'); // Switch to login tab
+    // Send data to backend API
+    try {
+      const response = await fetch('/api/v1/user/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, email, password })
+      });
+
+      const result = await response.json();
+
+      
+
+      if(response.ok) {
+        alert(result.message || 'Account created successfully!');
+        showTab('login');
+      } else {
+        alert(result.message || 'Registration failed!');
+      }
+    } catch (err) {
+      alert('Error connecting to server.');
+    }
+    if(response.ok) {
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("username", result.data.user.username); // Save username
+        window.location.href = "index.html"; // or "dasboard.html"
+    }
   });
 </script>
 </body>
