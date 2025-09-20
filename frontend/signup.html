@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up / Login - Agri-Insight AI</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #333;
+  }
+  header {
+    background-color: #2e7d32;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+  header .logo-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.8rem;
+  }
+  main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+  .tab-container {
+    background: #e8f5e9;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    max-width: 450px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .tabs {
+    display: flex;
+  }
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    background: #c8e6c9;
+    transition: background 0.3s;
+  }
+  .tab.active {
+    background: #2e7d32;
+    color: white;
+  }
+  .form-card {
+    padding: 2rem;
+  }
+  .form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #2e7d32;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #4caf50;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+  }
+  .form-group input:focus {
+    border-color: #1b5e20;
+    box-shadow: 0 0 8px rgba(46,125,50,0.5);
+  }
+  .btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    transition: 0.3s;
+  }
+  .btn-login {
+    background-color: #2e7d32;
+    color: white;
+  }
+  .btn-login:hover {
+    background-color: #1b5e20;
+  }
+  .btn-signup {
+    background-color: #66bb6a;
+    color: white;
+  }
+  .btn-signup:hover {
+    background-color: #43a047;
+  }
+  /* Eye icon style */
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  footer {
+    background-color: #2e7d32;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    font-weight: bold;
+  }
+  @media (max-width: 480px) {
+    .tab { padding: 0.8rem; font-size: 0.9rem; }
+    .form-card { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="logo-link">🌱 Agri-Insight AI</a>
+</header>
+
+<main>
+  <div class="tab-container">
+    <div class="tabs">
+      <div class="tab active" id="loginTab" onclick="showTab('login')">Login</div>
+      <div class="tab" id="signupTab" onclick="showTab('signup')">Sign Up</div>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="form-card">
+      <div class="form-group">
+        <label for="loginUsername">Username</label>
+        <input type="text" id="loginUsername" placeholder="Enter username" required>
+      </div>
+      <div class="form-group" style="position: relative;">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter password" required>
+        <span class="eye-icon" id="loginEye" onclick="togglePassword('loginPassword','loginEye')">👁️</span>
+      </div>
+      <button type="submit" class="btn btn-login">Login</button>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="signupForm" class="form-card" style="display:none;">
+      <div class="form-group">
+        <label for="signupUsername">Username</label>
+        <input type="text" id="signupUsername" placeholder="Enter username" required>
+      </div>
+      <div class="form-group">
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" placeholder="Enter email" required>
+      </div>
+      <div class="form-group" style="position: relative;">
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" placeholder="Enter password" required>
+        <span class="eye-icon" id="signupEye" onclick="togglePassword('signupPassword','signupEye')">👁️</span>
+      </div>
+      <button type="submit" class="btn btn-signup">Sign Up</button>
+    </form>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 Agri-Insight AI. All rights reserved.
+</footer>
+
+<script>
+  function showTab(tab) {
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const loginTab = document.getElementById('loginTab');
+    const signupTab = document.getElementById('signupTab');
+
+    if(tab === 'login') {
+      loginForm.style.display = 'block';
+      signupForm.style.display = 'none';
+      loginTab.classList.add('active');
+      signupTab.classList.remove('active');
+    } else {
+      loginForm.style.display = 'none';
+      signupForm.style.display = 'block';
+      loginTab.classList.remove('active');
+      signupTab.classList.add('active');
+    }
+  }
+
+  function togglePassword(inputId, eyeId) {
+    const passwordInput = document.getElementById(inputId);
+    const eyeIcon = document.getElementById(eyeId);
+    if(passwordInput.type === "password") {
+      passwordInput.type = "text";
+      eyeIcon.textContent = "🙈";
+    } else {
+      passwordInput.type = "password";
+      eyeIcon.textContent = "👁️";
+    }
+  }
+
+  // Login form validation
+  document.getElementById('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    if(!username || !password) {
+      alert('Username and password cannot be empty.');
+      return;
+    }
+
+    // Password check: min 8, at least 1 letter, 1 special char
+    const passRegex = /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if(!passRegex.test(password)) {
+      alert('Password must be at least 8 characters long and include at least one letter and one special character.');
+      return;
+    }
+
+    // Test account
+    if(username === 'Admin' && password === 'Admin') {
+      window.location.href = 'dashboard.html';
+    } else {
+      alert('Invalid username or password!');
+    }
+  });
+
+  // Signup form validation
+  document.getElementById('signupForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const username = document.getElementById('signupUsername').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+
+    if(!username || !email || !password) {
+      alert('All fields are required.');
+      return;
+    }
+
+    const passRegex = /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if(!passRegex.test(password)) {
+      alert('Password must be at least 8 characters long and include at least one letter and one special character.');
+      return;
+    }
+
+    alert('Account created successfully! (Demo only, no backend)');
+    showTab('login'); // Switch to login tab
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+/* ===============================
+   General Body & Font Styling
+=============================== */
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  /* Background image */
+  background-image: url("bird-s-eye-view-large-field-with-narrow-road-middle-sunny-day.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Overlay for readability */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55); /* Darker for better contrast */
+  z-index: -1;
+}
+
+main {
+  flex-grow: 1;
+}
+
+h1,
+h2,
+h3 {
+  color: #1b5e20;
+  margin: 0.8rem 0;
+  font-weight: 700;
+}
+
+/* ===============================
+   Header & Footer
+=============================== */
+header {
+  background: linear-gradient(90deg, #2e7d32, #43a047);
+  color: white;
+  padding: 0.7rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  font-size: 1.1rem;
+}
+
+header .logo-link {
+  text-decoration: none;
+  color: white;
+  font-weight: 800;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+header .logo-link:hover {
+  color: #c8e6c9;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 12px;
+  transition: 0.3s;
+}
+
+nav ul li a:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+}
+
+.search-bar {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  font-size: 1rem;
+}
+
+header .btn {
+  margin-left: auto;
+}
+
+/* Footer */
+footer {
+  background: #263238;
+  color: #eceff1;
+  text-align: center;
+  padding: 0.8rem;
+  font-size: 0.9rem;
+}
+
+/* ===============================
+   Buttons
+=============================== */
+.btn {
+  background: #4caf50;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.05rem;
+}
+
+.btn:hover {
+  background: #388e3c;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.btn-secondary {
+  background: #6c757d;
+}
+.btn-secondary:hover {
+  background: #545b62;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* ===============================
+   Container & Layout
+=============================== */
+.container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+/* ===============================
+   Forms & Cards
+=============================== */
+.form-card {
+  background: rgba(255, 255, 255, 0.97);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  max-width: 450px;
+  margin: 2rem auto;
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Dashboard Specifics */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.97);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  border-left: 6px solid #4caf50;
+  transition: 0.3s;
+}
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ===============================
+   Sections Visibility
+=============================== */
+section {
+  display: none;
+}
+section.active {
+  display: block;
+}
+
+/* ===============================
+   Choice Box
+=============================== */
+.choice-box {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.choice {
+  background: rgba(255, 255, 255, 0.97);
+  padding: 2.2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  width: 260px;
+  text-align: center;
+  transition: 0.3s;
+}
+.choice:hover {
+  transform: scale(1.05);
+  background: #f1f8e9;
+}
+
+/* ===============================
+   Floating Cards Carousel
+=============================== */
+.carousel-container {
+  position: relative;
+  max-width: 850px;
+  margin: 3rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-cards {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel-card {
+  min-width: 100%;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 12px;
+  padding: 2.2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.5s ease-in-out;
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: #388e3c;
+  background: white;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  line-height: 45px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: 0.3s;
+}
+
+.carousel-arrow:hover {
+  background: #c8e6c9;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-arrow.left {
+  left: -25px;
+}
+.carousel-arrow.right {
+  right: -25px;
+}
+
+/* ===============================
+   Responsive
+=============================== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  nav ul {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .choice-box {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .carousel-arrow {
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 1.5rem;
+  }
+}

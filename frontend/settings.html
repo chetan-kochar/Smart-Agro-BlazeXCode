@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - Agri-Insight AI</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Settings page tweaks */
+      .settings-box {
+        margin-top: 2rem;
+        padding: 2rem;
+        border-radius: 12px;
+        background: #e6f5e6;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        max-width: 500px;
+      }
+
+      .setting {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 1.5rem 0;
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
+
+      select {
+        padding: 0.6rem 1rem;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        border: 2px solid #2e7d32;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      h2 {
+        font-size: 2rem;
+        color: #1b5e20;
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <a class="logo-link" href="index.html"><h1 id="siteTitle">Agri-Insight AI</h1></a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="settings.html" id="navSettings">Settings</a></li>
+          <li><a href="index.html" id="navDashboard">Dashboard</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section id="settingsSection" class="active">
+        <h2 id="settingsTitle">Settings</h2>
+        <div class="settings-box">
+          <div class="setting">
+            <label for="themeSelect" id="themeLabel">Theme:</label>
+            <select id="themeSelect">
+              <option value="bright">Bright</option>
+              <option value="dark">Dark</option>
+            </select>
+          </div>
+          <div class="setting">
+            <label for="langSelect" id="langLabel">Language:</label>
+            <select id="langSelect">
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+            </select>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p id="footerText">&copy; Team BladeXCode . All rights reserved.</p>
+    </footer>
+
+    <script>
+      // --- Theme Change ---
+      const themeSelect = document.getElementById("themeSelect");
+      themeSelect.addEventListener("change", () => {
+        const theme = themeSelect.value;
+        if (theme === "dark") document.body.classList.add("dark-mode");
+        else document.body.classList.remove("dark-mode");
+        localStorage.setItem("theme", theme);
+      });
+
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeSelect.value = "dark";
+      }
+
+      // --- Language Support ---
+      const translations = {
+        en: {
+          siteTitle: "Agri-Insight AI",
+          navSettings: "Settings",
+          navDashboard: "Dashboard",
+          settingsTitle: "Settings",
+          themeLabel: "Theme:",
+          langLabel: "Language:",
+          footer: "© 2025 Agri-Insight AI. All rights reserved.",
+        },
+        hi: {
+          siteTitle: "एग्री-इंसाइट एआई",
+          navSettings: "सेटिंग्स",
+          navDashboard: "डैशबोर्ड",
+          settingsTitle: "सेटिंग्स",
+          themeLabel: "थीम:",
+          langLabel: "भाषा:",
+          footer: "© 2025 एग्री-इंसाइट एआई। सर्वाधिकार सुरक्षित।",
+        },
+      };
+
+      const langSelect = document.getElementById("langSelect");
+      langSelect.addEventListener("change", () => {
+        const lang = langSelect.value;
+        localStorage.setItem("lang", lang);
+        applyLanguage(lang);
+      });
+
+      function applyLanguage(lang) {
+        const t = translations[lang];
+        document.getElementById("siteTitle").innerText = t.siteTitle;
+        document.getElementById("navSettings").innerText = t.navSettings;
+        document.getElementById("navDashboard").innerText = t.navDashboard;
+        document.getElementById("settingsTitle").innerText = t.settingsTitle;
+        document.getElementById("themeLabel").innerText = t.themeLabel;
+        document.getElementById("langLabel").innerText = t.langLabel;
+        document.getElementById("footerText").innerText = t.footer;
+      }
+
+      // Load saved language
+      const savedLang = localStorage.getItem("lang") || "en";
+      langSelect.value = savedLang;
+      applyLanguage(savedLang);
+    </script>
+  </body>
+</html>
