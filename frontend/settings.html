@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - Agri-Insight AI</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <a class="logo-link" href="index.html"><h1>Agri-Insight AI</h1></a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="settings.html">Settings</a></li>
+          <li><a href="index.html">Dashboard</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section id="settingsSection" class="active">
+        <h2>Settings</h2>
+        <div class="settings-box">
+          <div class="setting">
+            <label for="themeSelect">Theme:</label>
+            <select id="themeSelect">
+              <option value="bright">Bright</option>
+              <option value="dark">Dark</option>
+            </select>
+          </div>
+          <div class="setting">
+            <label for="langSelect">Language:</label>
+            <select id="langSelect">
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+            </select>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p id="footerText">&copy; 2025 Agri-Insight AI. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // Theme Change
+      const themeSelect = document.getElementById("themeSelect");
+      themeSelect.addEventListener("change", () => {
+        const theme = themeSelect.value;
+        if (theme === "dark") document.body.classList.add("dark-mode");
+        else document.body.classList.remove("dark-mode");
+        localStorage.setItem("theme", theme);
+      });
+
+      // Load saved theme
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeSelect.value = "dark";
+      }
+
+      // Language Change
+      const langSelect = document.getElementById("langSelect");
+      langSelect.addEventListener("change", () => {
+        const lang = langSelect.value;
+        if (lang === "hi") translateToHindi();
+        else translateToEnglish();
+        localStorage.setItem("lang", lang);
+      });
+
+      // Load saved language
+      const savedLang = localStorage.getItem("lang");
+      if (savedLang === "hi") {
+        translateToHindi();
+        langSelect.value = "hi";
+      }
+
+      function translateToHindi() {
+        document.querySelector("h1").innerText = "एग्री-इंसाइट एआई";
+        document.querySelector("#footerText").innerText =
+          "© 2025 एग्री-इंसाइट एआई। सर्वाधिकार सुरक्षित।";
+        document.querySelector("h2").innerText = "सेटिंग्स";
+        document.querySelector("label[for='themeSelect']").innerText = "थीम:";
+        document.querySelector("label[for='langSelect']").innerText = "भाषा:";
+      }
+
+      function translateToEnglish() {
+        document.querySelector("h1").innerText = "Agri-Insight AI";
+        document.querySelector("#footerText").innerText =
+          "© 2025 Agri-Insight AI. All rights reserved.";
+        document.querySelector("h2").innerText = "Settings";
+        document.querySelector("label[for='themeSelect']").innerText = "Theme:";
+        document.querySelector("label[for='langSelect']").innerText =
+          "Language:";
+      }
+    </script>
+  </body>
+</html>

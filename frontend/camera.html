@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Health Detection</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header (reuse from main site) -->
+    <header>
+      <div class="logo">
+        <a class="logo-link" href="index.html">Agri-Insight AI</a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="#">Products</a></li>
+          <li><a href="#">Solution</a></li>
+          <li><a href="#">About Us</a></li>
+          <li class="search-box">
+            <input type="text" placeholder="Search..." class="search-bar" />
+          </li>
+        </ul>
+        <a class="btn" href="index.html">Sign Up / Login</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <h2>Upload or Capture Image</h2>
+      <input type="file" id="fileInput" accept="image/*" /><br />
+      <button id="captureBtn">Capture from Camera</button><br />
+      <video
+        id="video"
+        width="400"
+        height="300"
+        autoplay
+        style="display: none"
+      ></video>
+      <canvas id="canvas" style="display: none"></canvas>
+      <img id="preview" src="" alt="Selected Image" /><br />
+      <button id="submitBtn">Process Image</button>
+      <h3 id="result"></h3>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Agri-Insight AI. All rights reserved.</p>
+    </footer>
+
+    <script>
+      const fileInput = document.getElementById("fileInput");
+      const preview = document.getElementById("preview");
+      const submitBtn = document.getElementById("submitBtn");
+      const captureBtn = document.getElementById("captureBtn");
+      const video = document.getElementById("video");
+      const canvas = document.getElementById("canvas");
+      let imageData = null;
+
+      // File upload preview
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          preview.src = URL.createObjectURL(file);
+          imageData = file;
+        }
+      });
+
+      // Capture from camera
+      captureBtn.addEventListener("click", async () => {
+        video.style.display = "block";
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
+        video.srcObject = stream;
+
+        video.addEventListener("click", () => {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          canvas.getContext("2d").drawImage(video, 0, 0);
+          preview.src = canvas.toDataURL("image/png");
+          imageData = canvas.toDataURL("image/png");
+          video.style.display = "none";
+          stream.getTracks().forEach((track) => track.stop());
+        });
+      });
+
+      // Send image to backend
+      submitBtn.addEventListener("click", async () => {
+        if (!imageData) {
+          alert("Please select or capture an image first!");
+          return;
+        }
+
+        const formData = new FormData();
+        if (imageData instanceof File) {
+          formData.append("image", imageData);
+        } else {
+          const res = await fetch(imageData);
+          const blob = await res.blob();
+          formData.append("image", blob, "capture.png");
+        }
+
+        try {
+          const response = await fetch("/process", {
+            method: "POST",
+            body: formData,
+          });
+          const result = await response.json();
+          document.getElementById("result").innerText =
+            "Prediction: " + result.prediction;
+        } catch (err) {
+          document.getElementById("result").innerText =
+            "Error: Could not process image.";
+        }
+      });
+    </script>
+  </body>
+</html>
