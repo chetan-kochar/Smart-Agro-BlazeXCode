@@ -4,17 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Agri-Insight AI</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       margin: 0;
       padding: 0;
-      color: #333;
+      color: #fff;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+      background: url("bird-s-eye-view-large-field-with-narrow-road-middle-sunny-day.jpg") no-repeat center center/cover;
+    }
+
+     /* Overlay for readability */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(82, 94, 89, 0.8), rgba(56, 61, 62, 0.8));
+      z-index: 0;
+    }
+
+    header, main, footer {
+      position: relative;
+      z-index: 1;
     }
 
     header {
@@ -106,7 +119,7 @@
     }
 
     h1, h2, h3 {
-      color: #1b5e20;
+      color: #fff;
       font-weight: bold;
       margin: 1rem 0;
     }
@@ -124,17 +137,28 @@
     }
 
     .dashboard-card {
-      background: #e8f5e9;
+      background: rgba(255,255,255,0.1);
       padding: 1.5rem;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       font-weight: bold;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: #fff;
     }
 
     .dashboard-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+
+    /* Floating text style */
+    .floating-text {
+      margin-top: 2.5rem;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      line-height: 1.4;
     }
 
     footer {
@@ -158,6 +182,9 @@
         width: 100%;
         justify-content: flex-start;
       }
+      .floating-text {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -169,12 +196,8 @@
       <ul class="nav-links">
         <li><a href="dashboard.html">Dashboard</a></li>
         <li><a href="settings.html">Settings</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Solution</a></li>
         <li><a href="aboutus.html">About Us</a></li>
         <li><a href="login.html" class="btn btn-secondary" id="logoutBtn">Logout</a></li>
-
-
         <li><a href="camera.html">Crop Health</a></li>
       </ul>
       <div class="nav-buttons">
@@ -184,16 +207,13 @@
     </nav>
   </header>
 
-  <!-- Main Content -->
   <main>
     <section id="homeSection">
       <h2>Welcome to Agri-Insight AI</h2>
       <p>Your AI-powered companion for crop health monitoring, smart farming solutions, and precision agriculture.</p>
-      <a href="dashboard.html" class="btn">Go to Dashboard</a>
     </section>
 
     <section id="dashboardSection">
-      <h2>Dashboard</h2>
       <div class="dashboard-grid">
         <div class="dashboard-card">
           <h3>Soil Health</h3>
@@ -208,12 +228,18 @@
           <p>AI-driven pest monitoring system.</p>
         </div>
       </div>
+
+      <!-- Floating Text Section -->
+      <div class="floating-text">
+        Crop Health Monitoring Model<br>
+        Uses Hyperspectral Data and Weather Data for forecasting diseases and pests in crops, making farming predictable and profitable.
+      </div>
     </section>
   </main>
 
   <!-- Footer -->
   <footer>
-    &copy; 2025 Agri-Insight AI. All rights reserved.
+    &copy; Team BladeXCode. All rights reserved.
   </footer>
 
   <script>
