@@ -294,6 +294,7 @@ document
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: "include",
         body: JSON.stringify({ username, password })
       });
 
@@ -339,12 +340,13 @@ document
     // Send signup data to backend
     try {
       const response = await fetch("/api/v1/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username, email, password })
-      });
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+                    },
+          credentials: "include", // <-- This enables cookies!
+          body: JSON.stringify({ username, password })
+          });
 
       const result = await response.json();
 

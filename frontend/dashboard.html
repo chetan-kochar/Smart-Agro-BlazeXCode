@@ -103,7 +103,9 @@
   <header>
     <a href="dashboard.html" class="logo-link">🌱 Agri-Insight AI</a>
     <nav>
-      <button class="btn" id="logoutBtn">Logout</button>
+      <form action="/api/v1/user/logout" method="post">
+    <button type="submit" class="btn" id="logoutBtn">Logout</button>
+</form>
     </nav>
   </header>
 
@@ -151,7 +153,8 @@ if (!loggedIn) {
 document.getElementById("usernameDisplay").textContent = username;
 
 // Logout functionality
-logoutBtn.addEventListener("click", () => {
+logoutBtn.addEventListener("click", async () => {
+  await fetch()
   localStorage.setItem("loggedIn", "false");
   localStorage.removeItem("username");
   window.location.href = "index.html";
