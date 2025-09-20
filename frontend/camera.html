@@ -3,14 +3,78 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crop Health Detection</title>
+    <title>Crop Health Detection - Agri-Insight AI</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      main.container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        max-width: 800px;
+      }
+      h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #2e7d32;
+        margin-bottom: 1rem;
+      }
+      p {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 2rem;
+      }
+      label {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #2e7d32;
+      }
+      input[type="file"] {
+        font-size: 1rem;
+        padding: 8px;
+        border: 2px solid #4caf50;
+        border-radius: 8px;
+        background: #f9fff9;
+      }
+      #video, #preview, #previewVideo {
+        border: 3px solid #4caf50;
+        border-radius: 12px;
+        margin-top: 1rem;
+        max-width: 100%;
+      }
+      #result {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #2e7d32;
+      }
+      .btn {
+        font-size: 1.1rem;
+        font-weight: bold;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+      }
+      .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+      #capturePhotoBtn { background-color: #2e7d32; color: white; }
+      #capturePhotoBtn:hover { background-color: #388e3c; }
+      #recordVideoBtn { background-color: #1565c0; color: white; }
+      #recordVideoBtn:hover { background-color: #1e88e5; }
+      #submitBtn { background-color: #4caf50; color: white; }
+      #submitBtn:hover { background-color: #66bb6a; }
+    </style>
   </head>
   <body>
-    <!-- Header (reuse from main site) -->
+    <!-- Header -->
     <header>
       <div class="logo">
-        <a class="logo-link" href="index.html">Agri-Insight AI</a>
+        <a class="logo-link" href="index.html">🌱 Agri-Insight AI</a>
       </div>
       <nav>
         <ul>
@@ -18,28 +82,38 @@
           <li><a href="#">Products</a></li>
           <li><a href="#">Solution</a></li>
           <li><a href="#">About Us</a></li>
-          <li class="search-box">
-            <input type="text" placeholder="Search..." class="search-bar" />
-          </li>
+          <li><a href="settings.html">Settings</a></li>
+          <li class="search-box"><input type="text" placeholder="Search..." class="search-bar" /></li>
         </ul>
-        <a class="btn" href="index.html">Sign Up / Login</a>
+        <a class="btn" href="signup.html">Sign Up / Login</a>
       </nav>
     </header>
 
+    <!-- Main Section -->
     <main class="container">
-      <h2>Upload or Capture Image</h2>
-      <input type="file" id="fileInput" accept="image/*" /><br />
-      <button id="captureBtn">Capture from Camera</button><br />
-      <video
-        id="video"
-        width="400"
-        height="300"
-        autoplay
-        style="display: none"
-      ></video>
+      <h2>Crop Health Detection</h2>
+      <p>
+        Upload an image 🌾 or capture one using your camera 📷 to check plant health instantly.
+      </p>
+
+      <!-- File Upload -->
+      <label for="fileInput">Upload Image:</label><br />
+      <input type="file" id="fileInput" accept="image/*,video/*" /><br /><br />
+
+      <!-- Camera Capture Buttons -->
+      <button class="btn" id="capturePhotoBtn">📸 Capture Photo</button>
+      <button class="btn" id="recordVideoBtn">🎥 Record Video</button><br />
+
+      <!-- Live Video Stream -->
+      <video id="video" width="400" height="300" autoplay style="display: none;"></video>
       <canvas id="canvas" style="display: none"></canvas>
-      <img id="preview" src="" alt="Selected Image" /><br />
-      <button id="submitBtn">Process Image</button>
+
+      <!-- Preview -->
+      <img id="preview" src="" alt="Captured Image" style="display:none;" />
+      <video id="previewVideo" controls style="display:none; max-width:400px;"></video>
+
+      <!-- Submit -->
+      <button class="btn" id="submitBtn">🚀 Process</button>
       <h3 id="result"></h3>
     </main>
 
@@ -50,67 +124,120 @@
     <script>
       const fileInput = document.getElementById("fileInput");
       const preview = document.getElementById("preview");
+      const previewVideo = document.getElementById("previewVideo");
+      const capturePhotoBtn = document.getElementById("capturePhotoBtn");
+      const recordVideoBtn = document.getElementById("recordVideoBtn");
       const submitBtn = document.getElementById("submitBtn");
-      const captureBtn = document.getElementById("captureBtn");
       const video = document.getElementById("video");
       const canvas = document.getElementById("canvas");
       let imageData = null;
+      let videoData = null;
 
-      // File upload preview
+      // File Upload
       fileInput.addEventListener("change", (e) => {
         const file = e.target.files[0];
         if (file) {
-          preview.src = URL.createObjectURL(file);
-          imageData = file;
+          if (file.type.startsWith("image/")) {
+            preview.style.display = "block";
+            previewVideo.style.display = "none";
+            preview.src = URL.createObjectURL(file);
+            imageData = file;
+            videoData = null;
+          } else if (file.type.startsWith("video/")) {
+            previewVideo.style.display = "block";
+            preview.style.display = "none";
+            previewVideo.src = URL.createObjectURL(file);
+            videoData = file;
+            imageData = null;
+          }
         }
       });
 
-      // Capture from camera
-      captureBtn.addEventListener("click", async () => {
-        video.style.display = "block";
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-        });
-        video.srcObject = stream;
+      // Capture Photo
+      capturePhotoBtn.addEventListener("click", async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          video.style.display = "block";
+          video.srcObject = stream;
 
-        video.addEventListener("click", () => {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          canvas.getContext("2d").drawImage(video, 0, 0);
-          preview.src = canvas.toDataURL("image/png");
-          imageData = canvas.toDataURL("image/png");
-          video.style.display = "none";
-          stream.getTracks().forEach((track) => track.stop());
-        });
+          // Take snapshot on click
+          video.addEventListener("click", () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext("2d").drawImage(video, 0, 0);
+            preview.src = canvas.toDataURL("image/png");
+            preview.style.display = "block";
+            previewVideo.style.display = "none";
+            imageData = canvas.toDataURL("image/png");
+            videoData = null;
+            video.style.display = "none";
+            stream.getTracks().forEach((track) => track.stop());
+          }, { once: true });
+        } catch (err) {
+          alert("⚠️ Camera not accessible.");
+        }
       });
 
-      // Send image to backend
+      // Record Video
+      recordVideoBtn.addEventListener("click", async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+          video.style.display = "block";
+          video.srcObject = stream;
+
+          const mediaRecorder = new MediaRecorder(stream);
+          const chunks = [];
+
+          mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+          mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: "video/mp4" });
+            previewVideo.src = URL.createObjectURL(blob);
+            previewVideo.style.display = "block";
+            preview.style.display = "none";
+            videoData = blob;
+            imageData = null;
+            video.style.display = "none";
+            stream.getTracks().forEach((track) => track.stop());
+          };
+
+          // Start recording
+          mediaRecorder.start();
+          alert("🎥 Recording started... click OK to stop.");
+          setTimeout(() => {
+            mediaRecorder.stop();
+            alert("✅ Recording stopped.");
+          }, 5000); // auto stop after 5 sec
+        } catch (err) {
+          alert("⚠️ Camera/Audio not accessible.");
+        }
+      });
+
+      // Submit
       submitBtn.addEventListener("click", async () => {
-        if (!imageData) {
-          alert("Please select or capture an image first!");
+        if (!imageData && !videoData) {
+          alert("⚠️ Please upload or capture an image/video first!");
           return;
         }
 
         const formData = new FormData();
-        if (imageData instanceof File) {
-          formData.append("image", imageData);
-        } else {
-          const res = await fetch(imageData);
-          const blob = await res.blob();
-          formData.append("image", blob, "capture.png");
+        if (imageData) {
+          if (imageData instanceof File) {
+            formData.append("file", imageData);
+          } else {
+            const res = await fetch(imageData);
+            const blob = await res.blob();
+            formData.append("file", blob, "capture.png");
+          }
+        } else if (videoData) {
+          formData.append("file", videoData, "capture.mp4");
         }
 
         try {
-          const response = await fetch("/process", {
-            method: "POST",
-            body: formData,
-          });
+          const response = await fetch("/process", { method: "POST", body: formData });
           const result = await response.json();
-          document.getElementById("result").innerText =
-            "Prediction: " + result.prediction;
+          document.getElementById("result").innerText = "✅ Prediction: " + result.prediction;
         } catch (err) {
-          document.getElementById("result").innerText =
-            "Error: Could not process image.";
+          document.getElementById("result").innerText = "❌ Error: Could not process.";
         }
       });
     </script>
