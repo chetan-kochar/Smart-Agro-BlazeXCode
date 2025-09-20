@@ -109,6 +109,14 @@
   .btn-signup:hover {
     background-color: #43a047;
   }
+  /* Eye icon style */
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
   footer {
     background-color: #2e7d32;
     color: white;
@@ -140,9 +148,10 @@
         <label for="loginUsername">Username</label>
         <input type="text" id="loginUsername" placeholder="Enter username" required>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="position: relative;">
         <label for="loginPassword">Password</label>
         <input type="password" id="loginPassword" placeholder="Enter password" required>
+        <span class="eye-icon" id="loginEye" onclick="togglePassword('loginPassword','loginEye')">👁️</span>
       </div>
       <button type="submit" class="btn btn-login">Login</button>
     </form>
@@ -157,9 +166,10 @@
         <label for="signupEmail">Email</label>
         <input type="email" id="signupEmail" placeholder="Enter email" required>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="position: relative;">
         <label for="signupPassword">Password</label>
         <input type="password" id="signupPassword" placeholder="Enter password" required>
+        <span class="eye-icon" id="signupEye" onclick="togglePassword('signupPassword','signupEye')">👁️</span>
       </div>
       <button type="submit" class="btn btn-signup">Sign Up</button>
     </form>
@@ -170,7 +180,6 @@
   &copy; 2025 Agri-Insight AI. All rights reserved.
 </footer>
 
-<script src="auth.js"></script>
 <script>
   function showTab(tab) {
     const loginForm = document.getElementById('loginForm');
@@ -190,6 +199,66 @@
       signupTab.classList.add('active');
     }
   }
+
+  function togglePassword(inputId, eyeId) {
+    const passwordInput = document.getElementById(inputId);
+    const eyeIcon = document.getElementById(eyeId);
+    if(passwordInput.type === "password") {
+      passwordInput.type = "text";
+      eyeIcon.textContent = "🙈";
+    } else {
+      passwordInput.type = "password";
+      eyeIcon.textContent = "👁️";
+    }
+  }
+
+  // Login form validation
+  document.getElementById('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    if(!username || !password) {
+      alert('Username and password cannot be empty.');
+      return;
+    }
+
+    // Password check: min 8, at least 1 letter, 1 special char
+    const passRegex = /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if(!passRegex.test(password)) {
+      alert('Password must be at least 8 characters long and include at least one letter and one special character.');
+      return;
+    }
+
+    // Test account
+    if(username === 'Admin' && password === 'Admin') {
+      window.location.href = 'dashboard.html';
+    } else {
+      alert('Invalid username or password!');
+    }
+  });
+
+  // Signup form validation
+  document.getElementById('signupForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const username = document.getElementById('signupUsername').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+
+    if(!username || !email || !password) {
+      alert('All fields are required.');
+      return;
+    }
+
+    const passRegex = /^(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if(!passRegex.test(password)) {
+      alert('Password must be at least 8 characters long and include at least one letter and one special character.');
+      return;
+    }
+
+    alert('Account created successfully! (Demo only, no backend)');
+    showTab('login'); // Switch to login tab
+  });
 </script>
 </body>
 </html>
