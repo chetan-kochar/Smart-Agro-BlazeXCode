@@ -37,9 +37,9 @@ import {userRouter} from "./src/routes/user.route.js";
 app.use("/api/v1/user",userRouter)
 
 app.use((req , res) => {
-    console.log(`User requested an invalid url : ${req.url} at at ${actlog()}`);
-    res.status(404).render("404" ,{name : "404"});
-})
+    console.log(`User requested an invalid url : ${req.url} at ${new Date().toISOString()}`);
+    res.status(404).send("404 - Page Not Found");
+});
 
 export default app;
 
