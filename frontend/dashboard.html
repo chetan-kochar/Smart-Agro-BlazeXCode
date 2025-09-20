@@ -1,163 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard - Agri-Insight AI</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #e8f5e9, #f1f8e9);
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background-color: #2e7d32;
-      color: white;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    header .logo-link {
-      color: white;
-      text-decoration: none;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-
-    header .btn {
-      background: white;
-      color: #2e7d32;
-      font-weight: bold;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: 0.3s;
-      cursor: pointer;
-    }
-
-    header .btn:hover {
-      background: #f1f8f2;
-      transform: scale(1.05);
-    }
-
-    main.container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    main h2 {
-      font-size: 2rem;
-      color: #2e7d32;
-      margin-bottom: 1.5rem;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .dashboard-card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      text-align: left;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .dashboard-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    }
-
-    .dashboard-card h3 {
-      margin-bottom: 0.5rem;
-      color: #1b5e20;
-    }
-
-    .dashboard-card p {
-      margin: 0;
-      color: #333;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #2e7d32;
-      color: white;
-      margin-top: 2rem;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - Agri-Insight AI</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #e8f5e9, #f1f8e9);
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #2e7d32;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  header .logo-link { color: white; text-decoration: none; font-size: 1.8rem; font-weight: bold; }
+  header .btn {
+    background: white; color: #2e7d32; font-weight: bold;
+    padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; cursor: pointer;
+  }
+  header .btn:hover { background: #f1f8f2; transform: scale(1.05); }
+  main.container {
+    max-width: 1400px; margin: 2rem auto; padding: 1rem;
+  }
+  main h2 { font-size: 2rem; color: #2e7d32; margin-bottom: 1.5rem; text-align:center; }
+  .dashboard-grid {
+    display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap:2rem;
+  }
+  .dashboard-card {
+    background: white; padding:1.5rem; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s; text-align:center;
+  }
+  .dashboard-card:hover { transform: translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.25);}
+  .dashboard-card h3 { margin-bottom:1rem; color:#1b5e20;}
+  .dashboard-card p { margin:0.5rem 0; color:#333; font-size:1rem;}
+  #infectionLog { display:inline-block; margin-top:8px; font-size:0.95rem; color:#2563eb; text-decoration:none; font-weight:500;}
+  #infectionLog:hover { text-decoration: underline; }
+  footer { text-align:center; padding:1rem; background:#2e7d32; color:white; margin-top:2rem; font-weight:bold;}
+  canvas { max-width:100%!important; margin-top:1rem;}
+</style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <a href="dashboard.html" class="logo-link">🌱 Agri-Insight AI</a>
-    <nav>
-      <form action="/api/v1/user/logout" method="post">
+
+<header>
+  <a href="dashboard.html" class="logo-link">🌱 Agri-Insight AI</a>
+  <form action="/api/v1/user/logout" method="post">
     <button type="submit" class="btn" id="logoutBtn">Logout</button>
-</form>
-    </nav>
-  </header>
+  </form>
+</header>
 
-  <!-- Dashboard Content -->
-  <main class="container">
-    <h2>Welcome, <span id="usernameDisplay">User</span>! 🎉</h2>
-    <div class="dashboard-grid">
-      <div class="dashboard-card">
-        <h3>📊 Spectral Health Map</h3>
-        <p>No new data. Last updated: 20-09-2025</p>
-      </div>
-      <div class="dashboard-card">
-        <h3>🌱 Soil Condition Summary</h3>
-        <p>Moisture levels are optimal.</p>
-      </div>
-      <div class="dashboard-card">
-        <h3>🐛 Pest Risk Zones</h3>
-        <p>Low risk detected in all zones.</p>
-      </div>
-      <div class="dashboard-card">
-        <h3>⚠️ Anomaly Alerts</h3>
-        <p>You have 0 new alerts.</p>
-      </div>
-    </div>
-  </main>
+<main class="container">
+<h2>Welcome, <span id="usernameDisplay">User</span>! 🎉</h2>
 
-  <!-- Footer -->
-  <footer>
-    &copy; 2025 Agri-Insight AI. All rights reserved.
-  </footer>
- 
-</body>
+<div class="dashboard-grid">
+
+  <!-- Weather Card -->
+  <div class="dashboard-card" id="weatherCard">
+    <h3>☀️ Weather Overview</h3>
+    <p id="weatherSummary">Loading...</p>
+    <canvas id="weatherChart"></canvas>
+  </div>
+
+  <!-- Soil Health Card -->
+  <div class="dashboard-card" id="soilCard">
+    <h3>🌱 Soil Health</h3>
+    <p id="soilStatus">Analyzing soil data...</p>
+    <canvas id="soilRadarChart"></canvas>
+  </div>
+
+  <!-- Pest Risk Card -->
+  <div class="dashboard-card" id="pestCard">
+    <h3>🐛 Pest Risk Zones</h3>
+    <p id="pestSummary">Analyzing risk...</p>
+    <canvas id="pestChart"></canvas>
+    <a href="#" id="infectionLog">📜 Check Past Infection Log</a>
+  </div>
+
+  <!-- Alerts Card -->
+  <div class="dashboard-card" id="alertCard">
+    <h3>⚠️ Anomaly Alerts</h3>
+    <p id="alertSummary">Checking alerts...</p>
+    <canvas id="alertChart"></canvas>
+  </div>
+
+</div>
+</main>
+
+<footer>&copy; 2025 Agri-Insight AI. All rights reserved.</footer>
+
 <script>
 const logoutBtn = document.getElementById("logoutBtn");
-let loggedIn = localStorage.getItem("loggedIn") === "true";
-const username = localStorage.getItem("username") || "User";
+let loggedIn = localStorage.getItem("loggedIn")==="true";
+const username = localStorage.getItem("username")||"User";
+document.getElementById("usernameDisplay").textContent=username;
+if(!loggedIn){ alert("Login required!"); window.location.href="index.html";}
+logoutBtn.addEventListener("click",()=>{localStorage.setItem("loggedIn","false"); localStorage.removeItem("username"); window.location.href="index.html";});
 
-// Redirect to login page if not logged in
-if (!loggedIn) {
-  alert("You must login first!");
-  window.location.href = "index.html";
+// ------------- WEATHER -------------
+async function fetchWeather(){
+  try{
+    const res=await fetch("https://api.open-meteo.com/v1/forecast?latitude=28.61&longitude=77.23&current=temperature_2m,relative_humidity_2m,uv_index");
+    const data=await res.json();
+    const w=data.current;
+    document.getElementById("weatherSummary").innerHTML=`🌡 ${w.temperature_2m}°C | 💧 ${w.relative_humidity_2m}% | 🔆 UV ${w.uv_index}`;
+
+    const ctxW=document.getElementById("weatherChart").getContext("2d");
+    new Chart(ctxW,{
+      type:'line',
+      data:{
+        labels:['Temperature','Humidity','UV Index'],
+        datasets:[{
+          label:'Current Values',
+          data:[w.temperature_2m,w.relative_humidity_2m,w.uv_index],
+          backgroundColor:['#16a34a','#a3e635','#eab308'],
+          borderColor:['#16a34a','#a3e635','#eab308'],
+          fill:false,
+          tension:0.3,
+          pointRadius:6
+        }]
+      },
+      options:{ responsive:true, plugins:{ legend:{display:false} }, scales:{y:{beginAtZero:true}}}
+    });
+  }catch(e){ document.getElementById("weatherSummary").textContent="⚠️ Unable to fetch weather";}
 }
 
-// Display username
-document.getElementById("usernameDisplay").textContent = username;
+// ------------- SOIL -------------
+async function fetchSoil(){
+  try{
+    const res=await fetch("soilData.json");
+    const soilData=await res.json();
+    const metrics=soilData.soil_moisture_data;
+    const means=metrics.map(d=>d.mean);
+    const avgMean=means.reduce((a,b)=>a+b,0)/means.length;
+    let score=Math.min(100,Math.max(0,(avgMean/50)*100));
+    let statusClass="status-healthy", statusText="🟢 Healthy";
+    if(score<40){statusClass="status-poor";statusText="🔴 Poor";}
+    else if(score<70){statusClass="status-moderate";statusText="🟡 Moderate";}
+    document.getElementById("soilStatus").innerHTML=`<b>Score:</b> ${score.toFixed(1)}/100 | <span class="${statusClass}">${statusText}</span>`;
 
-// Logout functionality
-logoutBtn.addEventListener("click", async () => {
-  await fetch()
-  localStorage.setItem("loggedIn", "false");
-  localStorage.removeItem("username");
-  window.location.href = "index.html";
-});
-  </script>
+    const ctxRadar=document.getElementById("soilRadarChart").getContext("2d");
+    new Chart(ctxRadar,{
+      type:'radar',
+      data:{
+        labels: metrics.map(d=>d.measurement),
+        datasets:[{
+          label:'Soil Metrics',
+          data: metrics.map(d=>d.mean),
+          backgroundColor:'rgba(22,163,74,0.4)',
+          borderColor:'#16a34a',
+          borderWidth:2,
+          pointBackgroundColor:'#16a34a'
+        }]
+      },
+      options:{ responsive:true, scales:{r:{beginAtZero:true, suggestedMax:50}}}
+    });
+  }catch(e){ document.getElementById("soilStatus").textContent="⚠️ Soil data unavailable";}
+}
+
+// ------------- PESTS -------------
+async function fetchPests(){
+  try{
+    const pestData={zones:['North','South','East','West'], risk:[5,15,2,0]};
+    document.getElementById("pestSummary").textContent="Pest risk levels visualized below:";
+    const ctxP=document.getElementById("pestChart").getContext("2d");
+    new Chart(ctxP,{
+      type:'bar',
+      data:{ labels:pestData.zones, datasets:[{label:'Risk Level', data:pestData.risk, backgroundColor:['#dc2626','#f59e0b','#eab308','#16a34a'], borderRadius:6}] },
+      options:{ indexAxis:'y', responsive:true, plugins:{ legend:{display:false} }, scales:{x:{beginAtZero:true}} }
+    });
+  }catch(e){ console.error(e);}
+}
+
+// ------------- ALERTS -------------
+async function fetchAlerts(){
+  try{
+    const alerts={total:10,new:2};
+    document.getElementById("alertSummary").textContent=`Total: ${alerts.total}, New: ${alerts.new}`;
+    const ctxA=document.getElementById("alertChart").getContext("2d");
+    new Chart(ctxA,{
+      type:'polarArea',
+      data:{
+        labels:['New Alerts','Old Alerts'],
+        datasets:[{ data:[alerts.new,alerts.total-alerts.new], backgroundColor:['#eab308','#16a34a'] }]
+      },
+      options:{ responsive:true, plugins:{ legend:{position:'bottom'} } }
+    });
+  }catch(e){ console.error(e);}
+}
+
+// ------------- INIT -------------
+fetchWeather();
+fetchSoil();
+fetchPests();
+fetchAlerts();
+</script>
+</body>
 </html>
